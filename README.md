@@ -1,4 +1,4 @@
-(imagem)  
+# CSGO Club  
 ## Introdução  
 CSGO Club consiste em uma aplicação web em que jogadores de Counter-Strike: Global Offensive (CSGO) se juntam em um lobby para criar partidas em modo competitivo privado. Também é possível fazer download de replays de partidas anteriores, ver logs das partidas, além de ver o desempenho do jogador de maneira geral e em cada partida. O projeto irá funcionar com os seguintes componentes implantados na nuvem do Azure:  
 * VM com Aplicação Web  
