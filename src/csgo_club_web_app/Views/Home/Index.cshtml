@@ -5,12 +5,5 @@
     <div class="text-center">
         <h1 class="display-4">Welcome</h1>
         <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
-        @if (!User.Identity.IsAuthenticated)
-        {
-            <a asp-action="SignIn" asp-controller="Account">Login</a>
-        }
-        else
-        {
-            <a asp-action="SignOut" asp-controller="Account">Logout</a>
-        }
+   
     </div>
