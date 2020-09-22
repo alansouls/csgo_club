@@ -24,7 +24,11 @@ namespace csgo_club_web_app.Controllers
 
         public IActionResult Index()
         {
-            var users = _unityOfWork.GetRepository<User>().GetAll().ToList();
+            return View();
+        }
+
+        public IActionResult SignUp()
+        {
             return View();
         }
 
