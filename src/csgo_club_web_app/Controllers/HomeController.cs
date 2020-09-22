@@ -29,12 +29,20 @@ namespace csgo_club_web_app.Controllers
 
         public IActionResult Profile()
         {
-            return View();
+            var steamId = UInt64.Parse(User.Claims.First().Value.Split("id/")[2]);
+            var model = _unityOfWork.GetRepository<User>().Query(x => x.SteamId == steamId).FirstOrDefault();
+            return View(model);
         }
 
-        public IActionResult SignUp()
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult Profile(User model)
         {
-            return View();
+            if (ModelState.IsValid)
+            {
+                return View("Obrigado", model);
+            }
+            return View(model);
         }
 
         public IActionResult Privacy()

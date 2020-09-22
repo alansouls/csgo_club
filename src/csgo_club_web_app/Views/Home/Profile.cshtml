@@ -1,9 +1,27 @@
-﻿@{
+﻿@model CsgoClubEF.Entities.User
+@{
     ViewData["Title"] = "Profile Page";
 }
-
-<div class="text-center">
-    <h1 class="display-4">Profile</h1>
-    <p>Profile Form</p>
-
-</div>
+<h3>
+    Edit Profile
+</h3>
+<hr />
+<form asp-action="Profile" asp-anti-forgery="true" method="post">
+    <div class="form-group">
+        <label asp-for="Name"></label>
+        <input asp-for="Name" class="form-control" placeholder="Name" />
+    </div>
+    <div class="form-group">
+        <label asp-for="ProfilePicture"></label>
+        <input asp-for="ProfilePicture" class="form-control" placeholder="Picture Url" />
+    </div>
+    <div class="form-group">
+        <label asp-for="ADR"></label>
+        <input asp-for="ADR" class="form-control" placeholder="ADR" />
+    </div>
+    <div class="form-group">
+        <label asp-for="KDR"></label>
+        <input asp-for="KDR" class="form-control" placeholder="KDR" />
+    </div>
+    <input type="submit" value="Save Changes" class="btn btn-primary" />
+</form>
