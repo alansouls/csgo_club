@@ -17,8 +17,11 @@ namespace csgo_creator
             var ip = IPAddress.Parse("127.0.0.1");
             var server = service.GetServer(ip);
             await service.StartServer(server);
-            await Task.Delay(1000);
-            await service.StopServer(server);
+            while (server.IsOn)
+            {
+                var command = Console.ReadLine();
+                await service.ExecuteServerCommand(server, command);
+            }
         }
     }
 }
