@@ -1,5 +1,4 @@
-﻿using csgo_creator.Entities;
-using CsgoClubEF.Entities;
+﻿using CsgoClubEF.Entities;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -18,6 +17,9 @@ namespace CsgoClubEF.Repository
         {
             builder.Entity<GameMatch>();
             builder.Entity<Server>();
+            builder.Entity<User>().HasMany(p=> p.Friends).WithOne(p=> p.User);
+            builder.Entity<FriendList>();
+            builder.Entity<PlayerToMatch>();
         }
 
         public override int SaveChanges()

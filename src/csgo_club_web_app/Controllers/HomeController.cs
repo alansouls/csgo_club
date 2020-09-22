@@ -6,20 +6,25 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using csgo_club_web_app.Models;
+using CsgoClubEF.Repository;
+using CsgoClubEF.Entities;
 
 namespace csgo_club_web_app.Controllers
 {
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
+        private readonly IUnityOfWork _unityOfWork;
 
-        public HomeController(ILogger<HomeController> logger)
+        public HomeController(ILogger<HomeController> logger, IUnityOfWork unityOfWork)
         {
             _logger = logger;
+            _unityOfWork = unityOfWork;
         }
 
         public IActionResult Index()
         {
+            var users = _unityOfWork.GetRepository<User>().GetAll().ToList();
             return View();
         }
 

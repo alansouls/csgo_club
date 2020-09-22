@@ -9,11 +9,11 @@ namespace CsgoClubEF.Repository
 {
     public class UnitOfWork : IDisposable, IUnityOfWork
     {
-        private readonly DbContext _context;
+        private readonly Context _context;
         private readonly Hashtable repositories;
         private bool disposed = false;
 
-        public UnitOfWork(DbContext context)
+        public UnitOfWork(Context context)
         {
             _context = context;
             repositories = new Hashtable();

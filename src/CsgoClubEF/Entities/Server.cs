@@ -9,18 +9,21 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace csgo_creator.Entities
+namespace CsgoClubEF.Entities
 {
     public class Server : BaseEntity
     {
         public bool IsOn { get; set; }
 
-        public IPAddress ServerIp { get; set; }
+        public string Ip { get; set; }
 
         public IEnumerable<GameMatch> Matches { get; set; }
 
         [NotMapped]
         public Process ServerProcess { get; set; }
+
+        [NotMapped]
+        public IPAddress ServerIp { get; set; }
 
         [NotMapped]
         public Thread ProcessThread { get; set; }
