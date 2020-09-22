@@ -63,6 +63,7 @@ namespace csgo_creator.Service
                 serverProcess.StartInfo.Arguments = "commands/exec_server.sh";
                 serverProcess.StartInfo.CreateNoWindow = true;
                 serverProcess.StartInfo.RedirectStandardInput = true;
+                serverProcess.StartInfo.RedirectStandardOutput = true;
                 serverProcess.Start();
                 server.ServerProcess = serverProcess;
                 server.IsOn = true;
