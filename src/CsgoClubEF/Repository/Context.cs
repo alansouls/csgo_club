@@ -9,7 +9,7 @@ namespace CsgoClubEF.Repository
 {
     public class Context : DbContext
     {
-        public Context(DbContextOptions options) : base(options)
+        public Context(DbContextOptions<Context> options) : base(options)
         {
         }
 
@@ -17,9 +17,10 @@ namespace CsgoClubEF.Repository
         {
             builder.Entity<GameMatch>();
             builder.Entity<Server>();
-            builder.Entity<User>().HasMany(p=> p.Friends).WithOne(p=> p.User);
+            builder.Entity<User>().HasMany(p=> p.Friends).WithOne(p=> p.User).OnDelete(DeleteBehavior.NoAction);
             builder.Entity<FriendList>();
             builder.Entity<PlayerToMatch>();
+            base.OnModelCreating(builder);
         }
 
         public override int SaveChanges()

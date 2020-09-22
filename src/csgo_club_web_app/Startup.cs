@@ -16,6 +16,7 @@ namespace csgo_club_web_app
 {
     public class Startup
     {
+
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
@@ -28,6 +29,7 @@ namespace csgo_club_web_app
         {
             services.AddControllersWithViews();
             services.AddDbContext<Context>(options => options.UseSqlServer(Configuration["ConnectionStrings:DefaultConnection"]));
+            
             services.AddScoped<IUnityOfWork, UnitOfWork>();
             services.AddAuthentication(options =>
             {
@@ -68,6 +70,11 @@ namespace csgo_club_web_app
                     name: "default",
                     pattern: "{controller=Home}/{action=Index}/{id?}");
             });
+            using (var serviceScope = app.ApplicationServices.GetService<IServiceScopeFactory>().CreateScope())
+            {
+                var context = serviceScope.ServiceProvider.GetRequiredService<Context>();
+                context.Database.EnsureCreated();
+            }
         }
     }
 }
