@@ -27,6 +27,11 @@ namespace csgo_club_web_app.Controllers
             return View();
         }
 
+        public IActionResult Profile()
+        {
+            return View();
+        }
+
         public IActionResult SignUp()
         {
             return View();

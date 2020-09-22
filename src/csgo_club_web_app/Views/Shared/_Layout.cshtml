@@ -12,18 +12,26 @@
     <header>
         <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
             <div class="container">
-                <img src="~/assets/csgoclubbanner2.png" />
+                <a href="@Url.Action("Index", "Home")">
+                    <img src="~/assets/csgoclubbanner2.png" />
+                </a>
                 @if (!User.Identity.IsAuthenticated)
                 {
+
                     <button class="btn btn-primary btn-md p-2" type="button" onclick="location.href='@Url.Action("SignIn", "Account")'">
                         Login
                     </button>
                 }
                 else
                 {
-                    <button class="btn btn-primary btn-md p-2" type="button" onclick="location.href='@Url.Action("SignOut", "Account")'">
-                        Logout
-                    </button>
+                    <div>
+                        <button class="btn btn-primary btn-md p-2" type="button" onclick="location.href='@Url.Action("Profile", "Home")'">
+                            Profile
+                        </button>
+                        <button class="btn btn-primary btn-md p-2" type="button" onclick="location.href='@Url.Action("SignOut", "Account")'">
+                            Logout
+                        </button>
+                    </div>
                 }
             </div>
         </nav>
