@@ -10,30 +10,29 @@
 </head>
 <body>
     <header>
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
-            <div class="container">
+        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3" style="justify-content:space-between">
+            <div class="navbar-header">
                 <a href="@Url.Action("Index", "Home")">
                     <img src="~/assets/csgoclubbanner2.png" />
                 </a>
-                @if (!User.Identity.IsAuthenticated)
-                {
-
-                    <button class="btn btn-primary btn-md p-2" type="button" onclick="location.href='@Url.Action("SignIn", "Account")'">
-                        Login
-                    </button>
-                }
-                else
-                {
-                    <div>
-                        <button class="btn btn-primary btn-md p-2" type="button" onclick="location.href='@Url.Action("Profile", "Home")'">
-                            Profile
-                        </button>
-                        <button class="btn btn-primary btn-md p-2" type="button" onclick="location.href='@Url.Action("SignOut", "Account")'">
-                            Logout
-                        </button>
-                    </div>
-                }
             </div>
+            @if (!User.Identity.IsAuthenticated)
+            {
+                <button class="btn btn-primary btn-md p-2" type="button" onclick="location.href='@Url.Action("SignIn", "Account")'">
+                    Login
+                </button>
+            }
+            else
+            {
+                <div>
+                    <button class="btn btn-primary btn-md p-2" type="button" onclick="location.href='@Url.Action("Profile", "Home")'">
+                        Profile
+                    </button>
+                    <button class="btn btn-primary btn-md p-2" type="button" onclick="location.href='@Url.Action("SignOut", "Account")'">
+                        Logout
+                    </button>
+                </div>
+            }
         </nav>
     </header>
     <div class="container">
@@ -44,7 +43,7 @@
 
     <footer class="border-top footer text-muted">
         <div class="container">
-            &copy; 2020 - csgo_club_web_app - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+            &copy; 2020 - CSGO Club - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
         </div>
     </footer>
     <script src="~/lib/jquery/dist/jquery.min.js"></script>

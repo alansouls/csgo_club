@@ -6,6 +6,7 @@
     Edit Profile
 </h3>
 <hr />
+<img src="@Model.ProfilePicture" class="rounded-circle"/>
 <form asp-action="Profile" asp-anti-forgery="true" method="post">
     <div class="form-group">
         <label asp-for="Name"></label>
