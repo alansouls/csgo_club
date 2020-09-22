@@ -1,20 +1,19 @@
-﻿@model CsgoClubEF.Entities.User
+﻿@model csgo_club_web_app.Models.UserModel
 @{
-    ViewData["Title"] = "Profile Page";
+    ViewData["Title"] = "Edit Profile";
 }
 <h3>
     Edit Profile
 </h3>
 <hr />
-<img src="@Model.ProfilePicture" class="rounded-circle"/>
 <form asp-action="Profile" asp-anti-forgery="true" method="post">
+    <div class="form-group">
+        <img src="@Model.ProfilePicture" class="rounded-circle" />
+        <input type="file" name="file"/>
+    </div>
     <div class="form-group">
         <label asp-for="Name"></label>
         <input asp-for="Name" class="form-control" placeholder="Name" />
-    </div>
-    <div class="form-group">
-        <label asp-for="ProfilePicture"></label>
-        <input asp-for="ProfilePicture" class="form-control" placeholder="Picture Url" />
     </div>
     <div class="form-group">
         <label asp-for="ADR"></label>

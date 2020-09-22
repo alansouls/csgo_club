@@ -27,24 +27,6 @@ namespace csgo_club_web_app.Controllers
             return View();
         }
 
-        public IActionResult Profile()
-        {
-            var steamId = UInt64.Parse(User.Claims.First().Value.Split("id/")[2]);
-            var model = _unityOfWork.GetRepository<User>().Query(x => x.SteamId == steamId).FirstOrDefault();
-            return View(model);
-        }
-
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public IActionResult Profile(User model)
-        {
-            if (ModelState.IsValid)
-            {
-                return View("Obrigado", model);
-            }
-            return View(model);
-        }
-
         public IActionResult Privacy()
         {
             return View();
