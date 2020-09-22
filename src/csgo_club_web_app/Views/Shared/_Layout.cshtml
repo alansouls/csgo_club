@@ -9,7 +9,7 @@
     <link rel="stylesheet" href="~/css/site.css" />
 </head>
 <body>
-    <header>
+    <header style="position: fixed;width: -webkit-fill-available;z-index: 10;">
         <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3" style="justify-content:space-between">
             <div class="navbar-header">
                 <a href="@Url.Action("Index", "Home")">
@@ -35,10 +35,12 @@
             }
         </nav>
     </header>
-    <div class="container">
-        <main role="main" class="pb-3">
-            @RenderBody()
-        </main>
+    <div class="page-holder w-100 d-flex flex-wrap">
+        <div class="container-fluid px-xl-4">
+            <main role="main" class="pb-3" style="margin-top: 115px;" id="main-body">
+                @RenderBody()
+            </main>
+        </div>
     </div>
 
     <footer class="border-top footer text-muted">

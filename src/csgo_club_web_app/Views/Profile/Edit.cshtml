@@ -6,14 +6,16 @@
     Edit Profile
 </h3>
 <hr />
-<form asp-action="Profile" asp-anti-forgery="true" method="post">
-    <div class="form-group">
-        <img src="@Model.ProfilePicture" class="rounded-circle" />
-        <input type="file" name="file"/>
+<form asp-action="Edit" enctype="multipart/form-data" method="post">
+    <div class="container">
+        <div class="list-group mb-4">
+            <img src="@Model.ProfilePicture" class="rounded-circle mb-2" height="184" width="184" />
+            <input asp-for="PictureFile" />
+        </div>
+        <div class="form-group">
+            <label asp-for="Name"></label>
+            <input asp-for="Name" class="form-control" placeholder="Name" />
+        </div>
+        <input type="submit" value="Save Changes" class="btn btn-primary" />
     </div>
-    <div class="form-group">
-        <label asp-for="Name"></label>
-        <input asp-for="Name" class="form-control" placeholder="Name" />
-    </div>
-    <input type="submit" value="Save Changes" class="btn btn-primary" />
 </form>

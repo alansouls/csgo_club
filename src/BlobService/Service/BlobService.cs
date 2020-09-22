@@ -96,10 +96,11 @@ namespace BlobServices.Services
         /// </summary>
         /// <param name="file">Byte Array do arquivo.</param>
         /// <param name="fileName">Nome do arquivo para recuperar depois.</param>
-        public void UploadFile(byte[] file, string fileName)
+        public string UploadFile(byte[] file, string fileName)
         {
             var blobBlock = _activeContainer.GetBlockBlobReference(fileName);
             blobBlock.UploadFromByteArray(file, 0, file.Count());
+            return blobBlock.Uri.AbsoluteUri;
         }
     }
 }
