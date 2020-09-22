@@ -1,4 +1,4 @@
-﻿using csgo_creator.Entities;
+﻿using CsgoClubEF.Entities;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -63,6 +63,7 @@ namespace csgo_creator.Service
                 serverProcess.StartInfo.Arguments = "commands/exec_server.sh";
                 serverProcess.StartInfo.CreateNoWindow = true;
                 serverProcess.StartInfo.RedirectStandardInput = true;
+                serverProcess.StartInfo.RedirectStandardOutput = true;
                 serverProcess.Start();
                 server.ServerProcess = serverProcess;
                 server.IsOn = true;

@@ -1,4 +1,5 @@
-﻿using csgo_creator.Entities;
+﻿
+using CsgoClubEF.Entities;
 using System;
 using System.Collections.Generic;
 using System.Data;
