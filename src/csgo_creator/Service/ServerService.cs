@@ -1,4 +1,5 @@
 ﻿using CsgoClubEF.Entities;
+using CsgoClubEF.Repository;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -12,6 +13,15 @@ namespace csgo_creator.Service
 {
     public class ServerService : IServerService
     {
+        private readonly IRepository<Server> _repository;
+        private readonly IUnityOfWork _unityOfWork;
+
+        public ServerService(IUnityOfWork unityOfWork)
+        {
+            _unityOfWork = unityOfWork;
+            _repository = unityOfWork.GetRepository<Server>();
+        }
+
         public async Task<string> ExecuteServerCommand(Server server, string commandString)
         {  
             await server.OutputServerStream.ReadLineAsync();
@@ -78,6 +88,11 @@ namespace csgo_creator.Service
             {
                 Console.WriteLine("Could not open proccess");
             }
+        }
+
+        public void Save()
+        {
+            _unityOfWork.Save();
         }
     }
 }

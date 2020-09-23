@@ -21,6 +21,7 @@ namespace csgo_creator
             while (server.IsOn)
             {
                 Console.WriteLine("Aguardando comando");
+                Console.ReadLine();
                 var command = "say hi";
                 Console.WriteLine("Executando comando");
                 await service.ExecuteServerCommand(server, command);

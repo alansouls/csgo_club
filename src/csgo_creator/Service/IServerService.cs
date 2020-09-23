@@ -39,5 +39,6 @@ namespace csgo_creator
         /// <param name="server"></param>
         /// <returns>Returns IsOn</returns>
         Task<bool> StopServer(Server server);
+        void Save();
     }
 }
