@@ -18,7 +18,7 @@ namespace BlobServices.Services
         /// </summary>
         /// <param name="file">Byte Array do arquivo.</param>
         /// <param name="fileName">Nome do arquivo para recuperar depois.</param>
-        void UploadFile(byte[] file, string fileName);
+        string UploadFile(byte[] file, string fileName);
 
         /// <summary>
         /// Recupera o arquivo em um byte array atráves do seu caminho.

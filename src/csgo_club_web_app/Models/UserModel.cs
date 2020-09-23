@@ -19,6 +19,11 @@ namespace csgo_club_web_app.Models
             ProfilePicture = user.ProfilePicture;
             Rank = user.Rank;
         }
+
+        public UserModel()
+        {
+        }
+
         public Guid Id { get; set; }
         public UInt64 SteamId { get; set; }
         public string Name { get; set; }

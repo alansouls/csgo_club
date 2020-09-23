@@ -7,30 +7,29 @@
 </h3>
 <hr />
 <form asp-action="Profile" asp-anti-forgery="true" method="post">
-    <div class="form-group">
-        <img src="@Model.ProfilePicture" class="rounded-circle" />
-        <label type="file" name="file" />
+    <div class="container">
+        <img src="@Model.ProfilePicture" class="rounded-circle mb-2" height="184" width="184" />
+        <div class="form-group">
+            <label asp-for="Name"></label>
+            <label class="form-control">@Model.Name</label>
+        </div>
+        <div class="form-group">
+            <label asp-for="ADR"></label>
+            <label class="form-control">@Model.ADR</label>
+        </div>
+        <div class="form-group">
+            <label asp-for="KDR"></label>
+            <label class="form-control">@Model.KDR</label>
+        </div>
+        <div class="form-group">
+            <label asp-for="Rank"></label>
+            <label class="form-control">@Model.Rank</label>
+        </div>
+        @if (Model.SteamId == UInt64.Parse(User.Claims.First().Value.Split("id/")[2]))
+        {
+            <button class="btn btn-primary btn-md p-2" type="button" onclick="location.href='@Url.Action("Edit", "Profile")'">
+                Edit Profile
+            </button>
+        }
     </div>
-    <div class="form-group">
-        <label asp-for="Name"></label>
-        <label class="form-control">@Model.Name</label>
-    </div>
-    <div class="form-group">
-        <label asp-for="ADR"></label>
-        <label class="form-control">@Model.ADR</label>
-    </div>
-    <div class="form-group">
-        <label asp-for="KDR"></label>
-        <label class="form-control">@Model.KDR</label>
-    </div>
-    <div class="form-group">
-        <label asp-for="Rank"></label>
-        <label class="form-control">@Model.Rank</label>
-    </div>
-    @if (Model.SteamId == UInt64.Parse(User.Claims.First().Value.Split("id/")[2]))
-    {
-        <button class="btn btn-primary btn-md p-2" type="button" onclick="location.href='@Url.Action("Edit", "Profile")'">
-            Edit Profile
-        </button>
-    }
 </form>
