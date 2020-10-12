@@ -11,22 +11,8 @@ namespace csgo_creator
 {
     class Program
     {
-        static async Task Main(string[] args)
+        static void Main(string[] args)
         {
-            Console.WriteLine("Iniciando server");
-            IServerService service = new ServerService();
-            var ip = IPAddress.Parse("127.0.0.1");
-            var server = service.GetServer(ip);
-            await service.StartServer(server);
-            while (server.IsOn)
-            {
-                Console.WriteLine("Aguardando comando");
-                Console.ReadLine();
-                var command = "say hi";
-                Console.WriteLine("Executando comando");
-                await service.ExecuteServerCommand(server, command);
-                Console.WriteLine("Comando executado");
-            }
         }
     }
 }
