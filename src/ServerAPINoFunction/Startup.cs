@@ -1,9 +1,11 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Threading.Tasks;
 using csgo_creator;
 using csgo_creator.Service;
+using CsgoClubEF.Entities;
 using CsgoClubEF.Repository;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -14,6 +16,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using ServerAPI;
 
 namespace ServerAPINoFunction
 {
@@ -30,7 +33,12 @@ namespace ServerAPINoFunction
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddDbContext<Context>(options => options.UseSqlServer(Configuration["ConnectionStrings:DefaultConnection"]));
-
+            ServerInstance.Server = new Server
+            {
+                Ip = Configuration["ServerIP"],
+                IsOn = false,
+                ServerIp = IPAddress.Parse(Configuration["ServerIP"])
+            };
             services.AddScoped<IUnityOfWork, UnitOfWork>();
             services.AddScoped<IServerService, ServerService>();
             services.AddControllers();

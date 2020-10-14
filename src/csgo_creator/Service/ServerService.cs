@@ -23,11 +23,11 @@ namespace csgo_creator.Service
         }
 
         public async Task<string> ExecuteServerCommand(Server server, string commandString)
-        {  
-            //await server.OutputServerStream.ReadLineAsync();
+        {
+            await server.OutputServerStream.ReadLineAsync();
             await server.InputServerStream.WriteLineAsync(commandString);
-            //var response = await server.OutputServerStream.ReadLineAsync();
-            return "";
+            var response = await server.OutputServerStream.ReadLineAsync();
+            return response;
         }
 
         public Server GetServer(IPAddress iPAddress)
@@ -55,6 +55,8 @@ namespace csgo_creator.Service
 
         public async Task<bool> StopServer(Server server)
         {
+            if (!server.IsOn)
+                return false;
             await server.InputServerStream.WriteLineAsync("exit");
             await Task.Delay(500);
             return server.IsOn;
