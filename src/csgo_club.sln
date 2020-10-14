@@ -13,7 +13,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CsgoClubEF", "CsgoClubEF\Cs
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CsgoListener", "CsgoListener\CsgoListener.csproj", "{CE8DBE07-2451-422A-B7F6-02BB5A4DFD28}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ServerAPINoFunction", "ServerAPINoFunction\ServerAPINoFunction.csproj", "{ED3F46DB-E8A4-430D-953F-BC6AA09A0502}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ServerAPI", "ServerAPINoFunction\ServerAPI.csproj", "{ED3F46DB-E8A4-430D-953F-BC6AA09A0502}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
