@@ -1,0 +1,1 @@
+Isso pra funcionar as functions na vm.
