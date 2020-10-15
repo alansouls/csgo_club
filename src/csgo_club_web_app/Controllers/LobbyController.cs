@@ -20,7 +20,7 @@ namespace csgo_club_web_app.Controllers
         public IActionResult Index()
         {
             var id = UInt64.Parse(User.Claims.First().Value.Split("id/")[2]);
-            var user = _unityOfWork.GetRepository<User>().Query(x => x.SteamId == id).Include(f=> f.FriendsTo).FirstOrDefault();
+            var user = _unityOfWork.GetRepository<User>().Query(x => x.SteamId == id).Include(f=> f.Friends).FirstOrDefault();
             var friendList = _unityOfWork.GetRepository<FriendList>().Query(x => x.UserId == user.Id).Include(x=> x.Friend).ToList();
             return View(user);
         }
