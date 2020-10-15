@@ -26,7 +26,7 @@ namespace csgo_club_web_app.Controllers
 
         public IConfiguration Configuration { get; }
 
-        public ActionResult Index([FromRoute] UInt64 id)
+        public IActionResult Index([FromRoute] UInt64 id)
         {
             if(id == 0)
                 id = UInt64.Parse(User.Claims.First().Value.Split("id/")[2]);
@@ -37,7 +37,7 @@ namespace csgo_club_web_app.Controllers
             return View(model);
         }
 
-        public ActionResult Edit()
+        public IActionResult Edit()
         {
             var steamId = UInt64.Parse(User.Claims.First().Value.Split("id/")[2]);
             var user = _unityOfWork.GetRepository<User>().Query(x => x.SteamId == steamId).FirstOrDefault();

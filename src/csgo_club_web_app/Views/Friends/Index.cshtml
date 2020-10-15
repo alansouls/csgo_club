@@ -1,0 +1,30 @@
+﻿@model CsgoClubEF.Entities.User
+@{
+    ViewData["Title"] = "Friends List";
+}
+    <link href="~/css/card.css" rel="stylesheet" type="text/css" />
+    <div class="container">
+        <div class="main-body">
+            <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-xl-4 gutters-sm">
+                @foreach (var f in Model.Friends)
+                {
+                    <div class="col mb-3">
+                        <div class="card">
+                            <img src="https://via.placeholder.com/340x120/FFB6C1/000000" alt="Cover" class="card-img-top">
+                            <div class="card-body text-center">
+                                <img src="@f.Friend.ProfilePicture" style="width:100px;height:100px;margin-top:-65px" alt="User" class="img-fluid img-thumbnail rounded-circle border-0 mb-3">
+                                <a href="/Profile/Index/@f.Friend.SteamId">
+                                    <h5 class="card-title">@f.Friend.Name</h5>
+                                </a>
+                                <p class="text-secondary mb-1">@f.Friend.Rank</p>
+                                <p class="text-muted font-size-sm">@f.Friend.ADR</p>
+                            </div>
+                            <div class="card-footer">
+                                <button class="btn btn-light btn-sm bg-white has-icon btn-block" type="button"><i class="material-icons"></i>Add Friend</button>
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>

@@ -16,6 +16,10 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Include="wwwroot\css\card.css" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\BlobService\BlobService.csproj" />
     <ProjectReference Include="..\CsgoClubEF\CsgoClubEF.csproj" />
   </ItemGroup>

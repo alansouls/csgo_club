@@ -24,14 +24,20 @@
             }
             else
             {
-                <div>
-                    <button class="btn btn-primary btn-md p-2" type="button" onclick="location.href='@Url.Action("Index", "Profile")'">
-                        Profile
-                    </button>
-                    <button class="btn btn-primary btn-md p-2" type="button" onclick="location.href='@Url.Action("SignOut", "Account")'">
-                        Logout
-                    </button>
-                </div>
+        <div>
+            <button class="btn btn-primary btn-md p-2" type="button" onclick="location.href='@Url.Action("Index", "Lobby")'">
+                Lobby
+            </button>
+            <button class="btn btn-primary btn-md p-2" type="button" onclick="location.href='@Url.Action("Index", "Friends")'">
+                Friends
+            </button>
+            <button class="btn btn-primary btn-md p-2" type="button" onclick="location.href='@Url.Action("Index", "Profile")'">
+                Profile
+            </button>
+            <button class="btn btn-primary btn-md p-2" type="button" onclick="location.href='@Url.Action("SignOut", "Account")'">
+                Logout
+            </button>
+        </div>
             }
         </nav>
     </header>
