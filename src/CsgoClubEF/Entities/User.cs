@@ -19,6 +19,8 @@ namespace CsgoClubEF.Entities
         public int Rank { get; set; }
 
         public IEnumerable<PlayerToMatch> Matches { get; set; }
-        public IEnumerable<FriendList> Friends { get; set; }
+        public IEnumerable<FriendList> FriendsTo { get; set; }
+
+        public IEnumerable<FriendList> FriendsFrom { get; set; }
     }
 }

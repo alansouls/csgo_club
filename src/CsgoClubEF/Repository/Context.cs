@@ -17,8 +17,9 @@ namespace CsgoClubEF.Repository
         {
             builder.Entity<GameMatch>();
             builder.Entity<Server>();
-            builder.Entity<User>().HasMany(p=> p.Friends).WithOne(p=> p.User).OnDelete(DeleteBehavior.NoAction);
-            builder.Entity<FriendList>();
+            builder.Entity<User>();
+            builder.Entity<FriendList>().HasOne(f => f.Friend).WithMany(a => a.FriendsFrom).OnDelete(DeleteBehavior.NoAction);
+            builder.Entity<FriendList>().HasOne(p => p.User).WithMany(p => p.FriendsTo).OnDelete(DeleteBehavior.NoAction);
             builder.Entity<PlayerToMatch>();
             base.OnModelCreating(builder);
         }
