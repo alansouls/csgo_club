@@ -1,0 +1,27 @@
+﻿@model CsgoClubEF.Entities.GameMatch
+@{
+    ViewData["Title"] = "Lobby Match";
+}
+<link href="~/css/card.css" rel="stylesheet" type="text/css" />
+<div class="container">
+    <div class="main-body">
+        <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-xl-4 gutters-sm">
+            @foreach (var m in Model.Matches)
+            {
+                <div class="col mb-3">
+                    <div class="card">
+                        <img src="https://via.placeholder.com/340x120/FFB6C1/000000" alt="Cover" class="card-img-top">
+                        <div class="card-body text-center">
+                            <img src="@m.User.ProfilePicture" style="width:100px;margin-top:-65px" alt="User" class="img-fluid img-thumbnail rounded-circle border-0 mb-3">
+                            <h5 class="card-title">@m.User.Name</h5>
+                            <h5 class="card-title">@m.User.ADR</h5>
+                            <h5 class="card-title">@m.User.Rank</h5>
+                        </div>
+                        <div class="card-footer">
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+</div>

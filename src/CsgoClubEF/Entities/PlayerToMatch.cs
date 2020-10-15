@@ -11,5 +11,9 @@ namespace CsgoClubEF.Entities
 
         public Guid UserId { get; set; }
         public Guid GameMatchId { get; set; }
+
+        public bool IsLeader { get; set; }
+
+        public bool IsCT { get; set; }
     }
 }
