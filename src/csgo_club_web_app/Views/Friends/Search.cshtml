@@ -1,0 +1,20 @@
+﻿@model csgo_club_web_app.Models.SearchModel
+@{
+    ViewData["Title"] = "Friends List";
+}
+<link href="~/css/card.css" rel="stylesheet" type="text/css" />
+<div class="container">
+    <div class="main-body">
+        <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-xl-4 gutters-sm">
+            <form asp-action="Search" enctype="multipart/form-data" method="post">
+                <div class="container">
+                    <div class="form-group">
+                        <label asp-for="Name"></label>
+                        <input asp-for="Name" class="form-control" placeholder="Name" />
+                    </div>
+                    <input type="submit" value="Search" class="btn btn-primary" />
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,35 @@
+﻿@model List<CsgoClubEF.Entities.User>
+@{
+    ViewData["Title"] = "Friends List";
+}
+<link href="~/css/card.css" rel="stylesheet" type="text/css" />
+<div class="container">
+    <div class="main-body">
+        <button class="btn btn-primary btn-md p-2" type="button" onclick="location.href='@Url.Action("Search", "Friends")'">
+            Search User
+        </button>
+        <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-xl-4 gutters-sm">
+            @foreach (var u in Model)
+            {
+                var random = new Random();
+                var color = String.Format("#{0:X6}", random.Next(0x1000000));
+                <div class="col mb-3">
+                    <div class="card">
+                        <div style="background-color:@color; width:100%; height:100px" alt="Cover" class="card-img-top"></div>
+                        <div class="card-body text-center">
+                            <img src="@u.ProfilePicture" style="width:100px;height:100px;margin-top:-65px" alt="User" class="img-fluid img-thumbnail rounded-circle border-0 mb-3">
+                            <a href="/Profile/Index/@u.SteamId">
+                                <h5 class="card-title">@u.Name</h5>
+                            </a>
+                            <p class="text-secondary mb-1">@u.Rank</p>
+                            <p class="text-muted font-size-sm">@u.ADR</p>
+                        </div>
+                        <div class="card-footer">
+                            <button onclick="location.href='@Url.Action("Add", "Friends", new { id= u.Id})'" class="btn btn-light btn-sm bg-white has-icon btn-block" type="button"><i class="material-icons"></i>Adicionar</button>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+</div>

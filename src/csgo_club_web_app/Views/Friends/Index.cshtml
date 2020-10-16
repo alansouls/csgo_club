@@ -5,12 +5,17 @@
     <link href="~/css/card.css" rel="stylesheet" type="text/css" />
     <div class="container">
         <div class="main-body">
+            <button class="btn btn-primary btn-md p-2" type="button" onclick="location.href='@Url.Action("Search", "Friends")'">
+                Search User
+            </button>
             <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-xl-4 gutters-sm">
                 @foreach (var f in Model.Friends)
                 {
+                    var random = new Random();
+                    var color = String.Format("#{0:X6}", random.Next(0x1000000));
                     <div class="col mb-3">
                         <div class="card">
-                            <img src="https://via.placeholder.com/340x120/FFB6C1/000000" alt="Cover" class="card-img-top">
+                            <div style="background-color:@color; width:100%; height:100px" alt="Cover" class="card-img-top"></div>
                             <div class="card-body text-center">
                                 <img src="@f.Friend.ProfilePicture" style="width:100px;height:100px;margin-top:-65px" alt="User" class="img-fluid img-thumbnail rounded-circle border-0 mb-3">
                                 <a href="/Profile/Index/@f.Friend.SteamId">
@@ -18,9 +23,6 @@
                                 </a>
                                 <p class="text-secondary mb-1">@f.Friend.Rank</p>
                                 <p class="text-muted font-size-sm">@f.Friend.ADR</p>
-                            </div>
-                            <div class="card-footer">
-                                <button class="btn btn-light btn-sm bg-white has-icon btn-block" type="button"><i class="material-icons"></i>Add Friend</button>
                             </div>
                         </div>
                     </div>
