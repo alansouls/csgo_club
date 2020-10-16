@@ -21,9 +21,11 @@
                         <div style="background-color:@color; width:100%; height:100px" alt="Cover" class="card-img-top"></div>
                         <div class="card-body text-center">
                             <img src="@leader.ProfilePicture" style="width:100px;height:100px;margin-top:-65px" alt="User" class="img-fluid img-thumbnail rounded-circle border-0 mb-3">
-                            <a href="/Profile/Index/@leader.SteamId">
-                                <h5 class="card-title">Sala de @leader.Name</h5>
-                            </a>
+                            <h5 class="card-title">
+                                Sala de <a href="/Profile/Index/@leader.SteamId">
+                                    @leader.Name
+                                </a>
+                            </h5>
                             <h5 class="card-title">@avgKdr</h5>
                             <h5 class="card-title">@avgRank</h5>
                         </div>
