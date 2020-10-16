@@ -95,18 +95,25 @@ namespace csgo_club_web_app.Controllers
         }
         private bool CheckHasCsgo(ulong steamId)
         {
-            var url = "http://api.steampowered.com/IPlayerService/GetOwnedGames/v0001/?key=" +
-                Configuration["SteamApiKey"] + "&steamid=" + steamId.ToString() + "&format=json";
-            var httpClient = new HttpClient();
-            var httpResponse = httpClient.GetAsync(url).Result;
-            var gamesData = JObject.Parse(httpResponse.Content.ReadAsStringAsync().Result)["response"];
-            var gamesList = gamesData["games"].ToList();
-            foreach(var g in gamesList)
+            try
             {
-                if (g["appid"].Value<int>() == 730)
-                    return true;
+                var url = "http://api.steampowered.com/IPlayerService/GetOwnedGames/v0001/?key=" +
+                    Configuration["SteamApiKey"] + "&steamid=" + steamId.ToString() + "&format=json";
+                var httpClient = new HttpClient();
+                var httpResponse = httpClient.GetAsync(url).Result;
+                var gamesData = JObject.Parse(httpResponse.Content.ReadAsStringAsync().Result)["response"];
+                var gamesList = gamesData["games"].ToList();
+                foreach (var g in gamesList)
+                {
+                    if (g["appid"].Value<int>() == 730)
+                        return true;
+                }
+                return false;
             }
-            return false;
+            catch
+            {
+                return true;
+            }
         }
     }
 }
