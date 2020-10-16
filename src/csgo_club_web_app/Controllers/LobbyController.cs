@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using csgo_club_web_app.Models;
 using CsgoClubEF.Entities;
 using CsgoClubEF.Repository;
 using Microsoft.AspNetCore.Mvc;
@@ -27,8 +28,16 @@ namespace csgo_club_web_app.Controllers
 
         public IActionResult Match([FromRoute] Guid id)
         {
+            var userId = UInt64.Parse(User.Claims.First().Value.Split("id/")[2]);
+            var user = _unityOfWork.GetRepository<User>().Query(x => x.SteamId == userId)
+                .Include(x => x.Matches).ThenInclude(x => x.GameMatch).FirstOrDefault();
             var gameMatch = _unityOfWork.GetRepository<GameMatch>().Query(x=> x.Id == id).Include(x=> x.Matches).ThenInclude(x=> x.User).FirstOrDefault();
-            return View(gameMatch);
+            bool isLeader = gameMatch.Matches.Where(s => s.IsLeader).First().User.Id == user.Id;
+            return View(new MatchModel
+            {
+                IsLeader = isLeader,
+                GameMatch = gameMatch
+            });
         }
 
         public IActionResult NoServer()

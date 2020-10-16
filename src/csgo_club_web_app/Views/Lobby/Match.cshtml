@@ -1,4 +1,4 @@
-﻿@model CsgoClubEF.Entities.GameMatch
+﻿@model csgo_club_web_app.Models.MatchModel
 @{
     ViewData["Title"] = "Lobby Match";
 }
@@ -6,7 +6,7 @@
 <div class="container">
     <div class="main-body">
         <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-xl-4 gutters-sm">
-            @foreach (var m in Model.Matches)
+            @foreach (var m in Model.GameMatch.Matches)
             {
                 <div class="col mb-3">
                     <div class="card">
@@ -23,5 +23,37 @@
                 </div>
             }
         </div>
+        @if (Model.IsLeader)
+        {
+    <div>
+        @if (Model.GameMatch.Status == CsgoClubEF.Entities.MatchStatus.Lobby)
+        {
+            <button class="btn btn-info" asp-action="Start" asp-controller="Match" asp-route-ip="@Model.GameMatch.Server.Ip">Start Server</button>
+        }
+        else if (Model.GameMatch.Status == CsgoClubEF.Entities.MatchStatus.Started)
+        {
+            @*<form asp-action="Profile" asp-anti-forgery="true" method="post">
+                <div class="container">
+                    <div class="form-group">
+                        <label >Command:</label>
+                        <input form="Command"/>
+                    </div>
+                    <button class="btn btn-primary btn-md p-2" type="submit">
+                        Execute Command
+                    </button>
+                </div>
+            </form>*@
+            <button class="btn btn-info" asp-action="Stop" asp-controller="Match" asp-route-ip="@Model.GameMatch.Server.Ip">Stop Server</button>
+        }
+        else if (Model.GameMatch.Status == CsgoClubEF.Entities.MatchStatus.Finished)
+        {
+            <div>
+                <h1>Partida encerrada</h1>
+                <button>Baixar log</button>
+                <button>Baixar replay</button>
+            </div>
+        }
+    </div>
+        }
     </div>
 </div>
