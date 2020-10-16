@@ -45,7 +45,7 @@
                     </button>
                 </div>
             </form>*@
-            <a class="btn btn-info" asp-action="Stop" asp-controller="Lobby" asp-route-ip="@Model.GameMatch.Server.Ip">Stop Server</a>
+            <a class="btn btn-info" asp-action="Stop" asp-controller="Lobby" asp-route-id="@Model.GameMatch.Id" asp-route-ip="@Model.GameMatch.Server.Ip">Stop Server</a>
         }
         else if (Model.GameMatch.Status == CsgoClubEF.Entities.MatchStatus.Finished)
         {

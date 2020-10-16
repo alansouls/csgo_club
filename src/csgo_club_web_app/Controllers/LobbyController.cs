@@ -22,6 +22,12 @@ namespace csgo_club_web_app.Controllers
         public IActionResult Index()
         {
             var id = UInt64.Parse(User.Claims.First().Value.Split("id/")[2]);
+            var user = _unityOfWork.GetRepository<User>().Query(x => x.SteamId == id)
+                .Include(x => x.Matches).ThenInclude(x => x.GameMatch).FirstOrDefault();
+            var match = user.Matches.ToList().Find(x => x.GameMatch.Status != MatchStatus.Finished);
+            if (match != null)
+                return Redirect(Url.Action("Match", new { id = match.GameMatchId }));
+
             var gameMatch = _unityOfWork.GetRepository<GameMatch>().Query(x => x.Status == MatchStatus.Lobby)
                 .Include(x => x.Matches).ThenInclude(x => x.User).ToList();
             return View(gameMatch);
@@ -56,7 +62,7 @@ namespace csgo_club_web_app.Controllers
             if (match != null)
                 return Redirect(Url.Action("Match", new { id = gameMatch.Id }));
 
-            match = user.Matches.ToList().Find(x => x.GameMatch.Status == MatchStatus.Lobby);
+            match = user.Matches.ToList().Find(x => x.GameMatch.Status != MatchStatus.Finished);
             if (match != null)
                 return Redirect(Url.Action("Match", new { id = match.GameMatchId }));
             _unityOfWork.GetRepository<PlayerToMatch>().Add(
@@ -107,9 +113,23 @@ namespace csgo_club_web_app.Controllers
             {
                 var gameMatch = _unityOfWork.GetRepository<GameMatch>().Query(s => s.Id == id).First();
                 gameMatch.Status = MatchStatus.Started;
+                server.IsOn = true;
                 _unityOfWork.Save();
             }
             return Redirect(Url.Action("Match", new { id }));
+        }
+
+        public async Task<IActionResult> Stop([FromRoute] Guid id, [FromQuery] string ip)
+        {
+            var server = _unityOfWork.GetRepository<Server>().Query(s => s.Ip == ip).First();
+            if (await server.StopServer())
+            {
+                var gameMatch = _unityOfWork.GetRepository<GameMatch>().Query(s => s.Id == id).First();
+                gameMatch.Status = MatchStatus.Finished;
+                server.IsOn = false;
+                _unityOfWork.Save();
+            }
+            return Redirect(Url.Action("Index"));
         }
     }
 }
