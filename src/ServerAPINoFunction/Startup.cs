@@ -36,8 +36,7 @@ namespace ServerAPINoFunction
             ServerInstance.Server = new Server
             {
                 Ip = Configuration["ServerIP"],
-                IsOn = false,
-                ServerIp = IPAddress.Parse(Configuration["ServerIP"])
+                IsOn = false
             };
             services.AddScoped<IUnityOfWork, UnitOfWork>();
             services.AddScoped<IServerService, ServerService>();

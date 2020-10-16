@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using csgo_club_web_app.Models;
+using csgo_club_web_app.Services;
 using CsgoClubEF.Entities;
 using CsgoClubEF.Repository;
 using Microsoft.AspNetCore.Mvc;
@@ -31,7 +32,7 @@ namespace csgo_club_web_app.Controllers
             var userId = UInt64.Parse(User.Claims.First().Value.Split("id/")[2]);
             var user = _unityOfWork.GetRepository<User>().Query(x => x.SteamId == userId)
                 .Include(x => x.Matches).ThenInclude(x => x.GameMatch).FirstOrDefault();
-            var gameMatch = _unityOfWork.GetRepository<GameMatch>().Query(x=> x.Id == id).Include(x=> x.Matches).ThenInclude(x=> x.User).FirstOrDefault();
+            var gameMatch = _unityOfWork.GetRepository<GameMatch>().Query(x=> x.Id == id).Include(x=> x.Matches).ThenInclude(x=> x.User).Include(s => s.Server).FirstOrDefault();
             bool isLeader = gameMatch.Matches.Where(s => s.IsLeader).First().User.Id == user.Id;
             return View(new MatchModel
             {
@@ -97,6 +98,18 @@ namespace csgo_club_web_app.Controllers
             _unityOfWork.GetRepository<GameMatch>().Add(lobby);
             _unityOfWork.Save();
             return Redirect(Url.Action("Match", new { id = gmId}));
+        }
+
+        public async Task<IActionResult> Start([FromRoute] Guid id, [FromQuery] string ip)
+        {
+            var server = _unityOfWork.GetRepository<Server>().Query(s => s.Ip == ip).First();
+            if (await server.StartServer())
+            {
+                var gameMatch = _unityOfWork.GetRepository<GameMatch>().Query(s => s.Id == id).First();
+                gameMatch.Status = MatchStatus.Started;
+                _unityOfWork.Save();
+            }
+            return Redirect(Url.Action("Match", new { id }));
         }
     }
 }
