@@ -58,7 +58,7 @@
         }
         @if (Model.GameMatch.Password != null && Model.GameMatch.Password != "")
         {
-            <p>Paste that into CSGO console: @Model.GameMatch.Password</p>
+            <p>Paste that into CSGO console: connect @Model.GameMatch.Server.Ip; password @Model.GameMatch.Password</p>
         }
     </div>
 </div>
