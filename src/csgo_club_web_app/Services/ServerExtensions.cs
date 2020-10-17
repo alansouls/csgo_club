@@ -1,4 +1,5 @@
 ﻿using CsgoClubEF.Entities;
+using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,15 +10,17 @@ namespace csgo_club_web_app.Services
 {
     public static class ServerExtensions
     {
-        public static async Task<bool> StartServer(this Server server)
+        public static async Task<string> StartServer(this Server server)
         {
             var httpClient = new HttpClient();
             var response = await httpClient.GetAsync($"http://{server.Ip}:5000/api/server/start");
             if (response.StatusCode == System.Net.HttpStatusCode.OK)
             {
-                return true;
+                var result = await response.Content.ReadAsStringAsync();
+                var password = JObject.Parse(result)["password"].Value<string>();
+                return password;
             }
-            return false;
+            return "";
         }
 
         public static async Task<bool> StopServer(this Server server)

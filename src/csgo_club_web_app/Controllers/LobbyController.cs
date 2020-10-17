@@ -109,10 +109,12 @@ namespace csgo_club_web_app.Controllers
         public async Task<IActionResult> Start([FromRoute] Guid id, [FromQuery] string ip)
         {
             var server = _unityOfWork.GetRepository<Server>().Query(s => s.Ip == ip).First();
-            if (await server.StartServer())
+            var result = await server.StartServer();
+            if (result != "")
             {
                 var gameMatch = _unityOfWork.GetRepository<GameMatch>().Query(s => s.Id == id).First();
                 gameMatch.Status = MatchStatus.Started;
+                gameMatch.Password = result;
                 server.IsOn = true;
                 _unityOfWork.Save();
             }

@@ -56,6 +56,10 @@
                 }
             </div>
         }
+        @if (Model.GameMatch.Password != null && Model.GameMatch.Password != "")
+        {
+            <p>Paste that into CSGO console: @Model.GameMatch.Password</p>
+        }
     </div>
 </div>
 

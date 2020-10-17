@@ -29,7 +29,7 @@ namespace ServerAPINoFunction.Controllers
             server.Password = ConstructPassword();
             await service.StartServer(server);
             service.Save();
-            return new JsonResult($"\"password\": {server.Password}");
+            return new JsonResult(new { password = server.Password });
         }
 
         [Route("[action]")]
