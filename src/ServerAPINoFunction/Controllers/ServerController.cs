@@ -29,7 +29,7 @@ namespace ServerAPINoFunction.Controllers
             server.Password = ConstructPassword();
             await service.StartServer(server);
             service.Save();
-            return new JsonResult("{}");
+            return new JsonResult($"\"password\": {server.Password}");
         }
 
         [Route("[action]")]
@@ -59,8 +59,11 @@ namespace ServerAPINoFunction.Controllers
             var result = "";
             for (int i = 0; i < 10; ++i)
             {
-                char a = (char)random.Next(48, 90);
-                result += a;
+                char[] selector = new char[3] ;
+                selector[0] = (char)random.Next('0', '9');
+                selector[1] = (char)random.Next('A', 'Z');
+                selector[2] = (char)random.Next('a', 'z');
+                result += selector[random.Next(0, 3)];
             }
             return result;
         }
