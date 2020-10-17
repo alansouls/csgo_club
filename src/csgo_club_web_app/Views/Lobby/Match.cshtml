@@ -27,35 +27,43 @@
         </div>
         @if (Model.IsLeader)
         {
-    <div>
-        @if (Model.GameMatch.Status == CsgoClubEF.Entities.MatchStatus.Lobby)
-        {
-            <a class="btn btn-info" asp-action="Start" asp-controller="Lobby" asp-route-id="@Model.GameMatch.Id" asp-route-ip="@Model.GameMatch.Server.Ip">Start Server</a>
-        }
-        else if (Model.GameMatch.Status == CsgoClubEF.Entities.MatchStatus.Started)
-        {
-            @*<form asp-action="Profile" asp-anti-forgery="true" method="post">
-                <div class="container">
-                    <div class="form-group">
-                        <label >Command:</label>
-                        <input form="Command"/>
-                    </div>
-                    <button class="btn btn-primary btn-md p-2" type="submit">
-                        Execute Command
-                    </button>
-                </div>
-            </form>*@
-            <a class="btn btn-info" asp-action="Stop" asp-controller="Lobby" asp-route-id="@Model.GameMatch.Id" asp-route-ip="@Model.GameMatch.Server.Ip">Stop Server</a>
-        }
-        else if (Model.GameMatch.Status == CsgoClubEF.Entities.MatchStatus.Finished)
-        {
             <div>
-                <h1>Partida encerrada</h1>
-                <button>Baixar log</button>
-                <button>Baixar replay</button>
+                @if (Model.GameMatch.Status == CsgoClubEF.Entities.MatchStatus.Lobby)
+                {
+                    <a class="btn btn-info" asp-action="Start" asp-controller="Lobby" asp-route-id="@Model.GameMatch.Id" asp-route-ip="@Model.GameMatch.Server.Ip">Start Server</a>
+                }
+                else if (Model.GameMatch.Status == CsgoClubEF.Entities.MatchStatus.Started)
+                {
+                    <div class="container">
+                        <div class="form-group">
+                            <label>Command:</label>
+                            <input form="Command" id="commandinput" />
+                        </div>
+                        <button class="btn btn-primary btn-md p-2" type="submit" id="commandbutton" onclick="handleCommandButtonClick('@Model.GameMatch.Server.Ip')">
+                            Execute Command
+                        </button>
+                        <a class="btn btn-info" asp-action="Stop" asp-controller="Lobby" asp-route-id="@Model.GameMatch.Id" asp-route-ip="@Model.GameMatch.Server.Ip">Stop Server</a>
+
+                    </div>
+                }
+                else if (Model.GameMatch.Status == CsgoClubEF.Entities.MatchStatus.Finished)
+                {
+                    <div>
+                        <h1>Partida encerrada</h1>
+                        <button>Baixar log</button>
+                        <button>Baixar replay</button>
+                    </div>
+                }
             </div>
         }
     </div>
-        }
-    </div>
 </div>
+
+<script src="~/axios/axios.js"></script>
+<script>
+    function handleCommandButtonClick(ip) {
+        const command = document.getElementById('commandinput').value;
+        axios.post(`/lobby/executecommand?command=${command}&ip=${ip}`);
+    }
+
+</script>

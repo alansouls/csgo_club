@@ -131,5 +131,14 @@ namespace csgo_club_web_app.Controllers
             }
             return Redirect(Url.Action("Index"));
         }
+
+        [HttpPost]
+        public async Task<IActionResult> ExecuteCommand([FromQuery] string command, [FromQuery] string ip)
+        {
+            var server = _unityOfWork.GetRepository<Server>().Query(s => s.Ip == ip).First();
+            if (await server.CommandServer(command))
+                return Ok();
+            return BadRequest();
+        }
     }
 }
