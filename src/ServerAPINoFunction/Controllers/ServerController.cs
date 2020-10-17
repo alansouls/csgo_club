@@ -26,9 +26,10 @@ namespace ServerAPINoFunction.Controllers
         public async Task<IActionResult> Start()
         {
             var server = ServerInstance.Server;
+            server.Password = ConstructPassword();
             await service.StartServer(server);
             service.Save();
-            return new OkResult();
+            return new JsonResult("{}");
         }
 
         [Route("[action]")]
@@ -49,6 +50,19 @@ namespace ServerAPINoFunction.Controllers
             await service.ExecuteServerCommand(server, command);
             service.Save();
             return new OkResult();
+        }
+
+
+        private string ConstructPassword()
+        {
+            var random = new Random();
+            var result = "";
+            for (int i = 0; i < 10; ++i)
+            {
+                char a = (char)random.Next(48, 90);
+                result += a;
+            }
+            return result;
         }
     }
 }

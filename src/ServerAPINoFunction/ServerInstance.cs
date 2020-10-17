@@ -9,5 +9,7 @@ namespace ServerAPI
     public static class ServerInstance
     {
         public static Server Server {get;set;}
+
+        public static string Password { get; set; }
     }
 }

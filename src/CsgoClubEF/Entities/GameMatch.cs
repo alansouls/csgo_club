@@ -22,6 +22,8 @@ namespace CsgoClubEF.Entities
         public MatchStatus Status { get; set; }
         public string MapName { get; set; }
 
+        public string Password { get; set; }
+
         public IEnumerable<PlayerToMatch> Matches { get; set; }
 
     }

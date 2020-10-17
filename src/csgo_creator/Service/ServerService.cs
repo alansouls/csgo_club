@@ -70,7 +70,7 @@ namespace csgo_creator.Service
                 serverProcess.StartInfo.UseShellExecute = false;
                 // You can start any process, HelloWorld is a do-nothing example.
                 serverProcess.StartInfo.FileName = "/bin/bash";
-                serverProcess.StartInfo.Arguments = "commands/exec_server.sh";
+                serverProcess.StartInfo.Arguments = $"commands/exec_server.sh {server.Password}";
                 serverProcess.StartInfo.CreateNoWindow = true;
                 serverProcess.StartInfo.RedirectStandardInput = true;
                 serverProcess.StartInfo.RedirectStandardOutput = true;

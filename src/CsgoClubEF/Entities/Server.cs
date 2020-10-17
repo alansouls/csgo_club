@@ -33,5 +33,8 @@ namespace CsgoClubEF.Entities
 
         [NotMapped]
         public StreamReader OutputServerStream { get; set; }
+
+        [NotMapped]
+        public string Password { get; set; }
     }
 }
