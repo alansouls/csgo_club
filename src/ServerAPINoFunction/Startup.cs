@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
+using BlobServices.Services;
 using csgo_creator;
 using csgo_creator.Service;
 using CsgoClubEF.Entities;
@@ -38,6 +39,7 @@ namespace ServerAPINoFunction
                 Ip = Configuration["ServerIP"],
                 IsOn = false
             };
+            services.AddScoped<IBlobService>(b =>  new BlobService(Configuration["BlobConnection"]));
             services.AddScoped<IUnityOfWork, UnitOfWork>();
             services.AddScoped<IServerService, ServerService>();
             services.AddControllers();
