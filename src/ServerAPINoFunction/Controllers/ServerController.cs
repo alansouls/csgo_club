@@ -81,7 +81,7 @@ namespace ServerAPINoFunction.Controllers
         public IEnumerable<string> GetReplaysURL()
         {
             var result = new List<string>();
-            var replays = Directory.GetFiles("/home/alan/csgo/csgo/*.dem").ToList();
+            var replays = Directory.GetFiles("/home/alan/csgo/csgo/", "*.dem").ToList();
             replays.ForEach(r =>
             {
                 var file = System.IO.File.ReadAllBytes(r);
