@@ -50,13 +50,12 @@
                 {
                     <div>
                         <h1>Partida encerrada</h1>
-                        <button>Baixar log</button>
-                        <button>Baixar replay</button>
+                        <a class="btn btn-info" href="@Model.GameMatch.DemoUrl" target="_blank">Baixar replay</a>
                     </div>
                 }
             </div>
         }
-        @if (Model.GameMatch.Password != null && Model.GameMatch.Password != "")
+        @if (Model.GameMatch.Password != null && Model.GameMatch.Password != "" && Model.GameMatch.Status != CsgoClubEF.Entities.MatchStatus.Finished)
         {
             <p>Paste that into CSGO console: connect @Model.GameMatch.Server.Ip; password @Model.GameMatch.Password</p>
         }

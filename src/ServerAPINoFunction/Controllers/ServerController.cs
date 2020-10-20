@@ -10,6 +10,7 @@ using CsgoClubEF.Entities;
 using CsgoClubEF.Repository;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using ServerAPI;
 
 namespace ServerAPINoFunction.Controllers
@@ -44,9 +45,10 @@ namespace ServerAPINoFunction.Controllers
         {
             var server = ServerInstance.Server;
             await service.StopServer(server);
-            var replaysUrl = GetReplaysURL();
+            var gameMatch = unityOfWork.GetRepository<GameMatch>().Query(s => s.Server.Ip == server.Ip && s.Status == MatchStatus.Started)
+                   .Include(g => g.Matches).ThenInclude(m => m.User).First();
             await Task.Delay(5000);
-            var gameMatch = unityOfWork.GetRepository<GameMatch>().Query(s => s.Server.Ip == server.Ip && s.Status == MatchStatus.Started).First();
+            var replaysUrl = GetReplaysURL(gameMatch);
             gameMatch.DemoUrl = replaysUrl.Last();
             service.Save();
             return new OkResult();
@@ -79,17 +81,16 @@ namespace ServerAPINoFunction.Controllers
             return result;
         }
 
-        public IEnumerable<string> GetReplaysURL()
+        public IEnumerable<string> GetReplaysURL(GameMatch gameMatch)
         {
+            var leader = gameMatch.Matches.Where(s => s.IsLeader).Select(s => s.User.Name).FirstOrDefault();
             var result = new List<string>();
             var replays = Directory.GetFiles("/home/alan/csgo/csgo/", "*.dem").ToList();
-            replays.ForEach(r =>
-            {
-                var file = System.IO.File.ReadAllBytes(r);
-                blobService.SelectBlobContainer("replays");
-                result.Add(blobService.UploadFile(file, r.Split("/").Last()));
-            });
-
+            var r = replays.OrderBy(s => int.Parse(s.Split("-")[2])).Last();
+            var file = System.IO.File.ReadAllBytes(r);
+            blobService.SelectBlobContainer("replays");
+            result.Add(blobService.UploadFile(file, $"replay_{leader}_{DateTime.Now:yyyy-MM-dd hh:mm}.dem"));
+            replays.ForEach(r => System.IO.File.Delete(r));
             return result;
         }
     }
