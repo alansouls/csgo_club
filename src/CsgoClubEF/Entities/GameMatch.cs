@@ -1,6 +1,8 @@
 ﻿using CsgoClubEF.Entities;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
+using System.Linq;
 using System.Text;
 
 namespace CsgoClubEF.Entities
@@ -25,6 +27,9 @@ namespace CsgoClubEF.Entities
         public string Password { get; set; }
 
         public IEnumerable<PlayerToMatch> Matches { get; set; }
+
+        [NotMapped]
+        public User Leader { get => Matches.Where(s => s.IsLeader).Select(s => s.User).FirstOrDefault(); }
 
     }
 }

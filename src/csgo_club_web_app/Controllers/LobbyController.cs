@@ -142,5 +142,16 @@ namespace csgo_club_web_app.Controllers
                 return Ok();
             return BadRequest();
         }
+
+        public IActionResult FinishedMatches()
+        {
+            var id = UInt64.Parse(User.Claims.First().Value.Split("id/")[2]);
+            var user = _unityOfWork.GetRepository<User>().Query(x => x.SteamId == id)
+                .Include(u => u.Matches)
+                .ThenInclude(m => m.GameMatch)
+                .ThenInclude(g => g.Matches)
+                .ThenInclude(m => m.User).FirstOrDefault();
+            return View(user.Matches.Select(s => s.GameMatch).Where(s => s.Status == MatchStatus.Finished).ToList());
+        }
     }
 }
