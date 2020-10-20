@@ -45,6 +45,7 @@ namespace ServerAPINoFunction.Controllers
             var server = ServerInstance.Server;
             await service.StopServer(server);
             var replaysUrl = GetReplaysURL();
+            await Task.Delay(5000);
             var gameMatch = unityOfWork.GetRepository<GameMatch>().Query(s => s.Server.Ip == server.Ip && s.Status == MatchStatus.Started).First();
             gameMatch.DemoUrl = replaysUrl.Last();
             service.Save();
