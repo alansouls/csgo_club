@@ -2,11 +2,13 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using csgo_club_web_app.Hubs;
 using csgo_club_web_app.Models;
 using csgo_club_web_app.Services;
 using CsgoClubEF.Entities;
 using CsgoClubEF.Repository;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.SignalR;
 using Microsoft.EntityFrameworkCore;
 
 namespace csgo_club_web_app.Controllers
@@ -14,10 +16,12 @@ namespace csgo_club_web_app.Controllers
     public class LobbyController : Controller
     {
         private readonly IUnityOfWork _unityOfWork;
-        
-        public LobbyController(IUnityOfWork unityOfWork)
+        private readonly IHubContext<MatchHub> hubContext;
+
+        public LobbyController(IUnityOfWork unityOfWork, IHubContext<MatchHub> hubContext)
         {
             _unityOfWork = unityOfWork;
+            this.hubContext = hubContext;
         }
         public IActionResult Index()
         {
@@ -119,6 +123,8 @@ namespace csgo_club_web_app.Controllers
                 server.IsOn = true;
                 _unityOfWork.Save();
             }
+            await hubContext.Clients.All.SendAsync("SendUpdateLobby", id);
+            
             return Redirect(Url.Action("Match", new { id }));
         }
 
