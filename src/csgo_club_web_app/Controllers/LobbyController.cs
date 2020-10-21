@@ -55,7 +55,7 @@ namespace csgo_club_web_app.Controllers
         {
             return View();
         }
-        public IActionResult EnterLobby([FromRoute] Guid id)
+        public async Task<IActionResult> EnterLobby([FromRoute] Guid id)
         {
             var userId = UInt64.Parse(User.Claims.First().Value.Split("id/")[2]);
             var user = _unityOfWork.GetRepository<User>().Query(x => x.SteamId == userId)
@@ -77,6 +77,7 @@ namespace csgo_club_web_app.Controllers
                 IsLeader = false
             });
             _unityOfWork.Save();
+            await hubContext.Clients.All.SendAsync("UpdateLobby", id);
             return Redirect(Url.Action("Match", new { id = gameMatch.Id }));
         }
         public IActionResult Create()
@@ -139,6 +140,7 @@ namespace csgo_club_web_app.Controllers
                 server.IsOn = false;
                 _unityOfWork.Save();
             }
+            await hubContext.Clients.All.SendAsync("UpdateLobby", id);
             return Redirect(Url.Action("Index"));
         }
 
@@ -160,6 +162,19 @@ namespace csgo_club_web_app.Controllers
                 .ThenInclude(g => g.Matches)
                 .ThenInclude(m => m.User).FirstOrDefault();
             return View(user.Matches.Select(s => s.GameMatch).Where(s => s.Status == MatchStatus.Finished).OrderByDescending(x=> x.MatchEndDate).ToList());
+        }
+
+        public async Task<IActionResult> ExitLobby()
+        {
+            var id = UInt64.Parse(User.Claims.First().Value.Split("id/")[2]);
+            var user = _unityOfWork.GetRepository<User>().Query(x => x.SteamId == id)
+                .Include(u => u.Matches)
+                .ThenInclude(m => m.GameMatch).FirstOrDefault();
+            var match = user.Matches.Where(s => s.GameMatch.Status == MatchStatus.Lobby).FirstOrDefault();
+            _unityOfWork.GetRepository<PlayerToMatch>().Remove(match);
+            _unityOfWork.Save();
+            await hubContext.Clients.All.SendAsync("UpdateLobby", match.GameMatchId);
+            return Redirect(Url.Action("Index"));
         }
     }
 }
