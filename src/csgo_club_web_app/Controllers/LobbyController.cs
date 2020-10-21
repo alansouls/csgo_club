@@ -123,8 +123,8 @@ namespace csgo_club_web_app.Controllers
                 server.IsOn = true;
                 _unityOfWork.Save();
             }
-            await hubContext.Clients.All.SendAsync("SendUpdateLobby", id);
-            
+            await hubContext.Clients.All.SendAsync("UpdateLobby", id);
+
             return Redirect(Url.Action("Match", new { id }));
         }
 
