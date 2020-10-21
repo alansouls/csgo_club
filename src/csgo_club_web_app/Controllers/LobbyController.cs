@@ -88,7 +88,8 @@ namespace csgo_club_web_app.Controllers
             await hubContext.Clients.All.SendAsync("UpdateLobby", id);
             return Redirect(Url.Action("Match", new { id = gameMatch.Id }));
         }
-        public IActionResult Create()
+
+        public async Task<IActionResult> Create()
         {
             var id = UInt64.Parse(User.Claims.First().Value.Split("id/")[2]);
             var user = _unityOfWork.GetRepository<User>().Query(x => x.SteamId == id).FirstOrDefault();
@@ -116,6 +117,7 @@ namespace csgo_club_web_app.Controllers
             };
             _unityOfWork.GetRepository<GameMatch>().Add(lobby);
             _unityOfWork.Save();
+            await hubContext.Clients.All.SendAsync("UpdateLobbyList");
             return Redirect(Url.Action("Match", new { id = gmId}));
         }
 

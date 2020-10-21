@@ -38,3 +38,22 @@
         </div>
     </div>
 </div>
+
+
+
+@section Scripts {
+    <script src="~/microsoft/signalr/dist/browser/signalr.js" type="text/javascript"></script>
+    <script>
+        var connection = new signalR.HubConnectionBuilder().withUrl("/matchhub").build();
+
+        connection.start().then(function () {
+            console.log('Connected to hub');
+        }).catch(function (err) {
+            return console.error(err.toString());
+        });
+
+        connection.on("UpdateLobbyList", function () {
+            window.location.reload();
+        });
+    </script>
+}
