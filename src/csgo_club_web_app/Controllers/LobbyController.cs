@@ -115,6 +115,7 @@ namespace csgo_club_web_app.Controllers
                 var gameMatch = _unityOfWork.GetRepository<GameMatch>().Query(s => s.Id == id).First();
                 gameMatch.Status = MatchStatus.Started;
                 gameMatch.Password = result;
+                gameMatch.MatchStartDate = DateTime.Now;
                 server.IsOn = true;
                 _unityOfWork.Save();
             }
@@ -128,6 +129,7 @@ namespace csgo_club_web_app.Controllers
             {
                 var gameMatch = _unityOfWork.GetRepository<GameMatch>().Query(s => s.Id == id).First();
                 gameMatch.Status = MatchStatus.Finished;
+                gameMatch.MatchEndDate = DateTime.Now;
                 server.IsOn = false;
                 _unityOfWork.Save();
             }

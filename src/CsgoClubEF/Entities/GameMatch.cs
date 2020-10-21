@@ -18,7 +18,9 @@ namespace CsgoClubEF.Entities
     {
         public Server Server { get; set; }
         public Guid ServerId { get; set; }
-        
+        public DateTime MatchStartDate { get; set; }
+        public DateTime MatchEndDate { get; set; }
+
         public string FinalScore { get; set; }
         public string DemoUrl { get; set; }
         public MatchStatus Status { get; set; }
