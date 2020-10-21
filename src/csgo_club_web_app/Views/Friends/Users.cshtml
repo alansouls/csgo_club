@@ -21,8 +21,8 @@
                             <a href="/Profile/Index/@u.SteamId">
                                 <h5 class="card-title">@u.Name</h5>
                             </a>
+                            <p class="text-muted font-size-sm">@u.KDR</p>
                             <p class="text-secondary mb-1">@u.Rank</p>
-                            <p class="text-muted font-size-sm">@u.ADR</p>
                         </div>
                         <div class="card-footer">
                             <button onclick="location.href='@Url.Action("Add", "Friends", new { id= u.Id})'" class="btn btn-light btn-sm bg-white has-icon btn-block" type="button"><i class="material-icons"></i>Adicionar</button>
