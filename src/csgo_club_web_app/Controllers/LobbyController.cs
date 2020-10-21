@@ -196,6 +196,7 @@ namespace csgo_club_web_app.Controllers
                 _unityOfWork.Save();
             }
             await hubContext.Clients.All.SendAsync("UpdateLobby", match.GameMatchId);
+            await hubContext.Clients.All.SendAsync("UpdateLobbyList");
             return Redirect(Url.Action("Index"));
         }
 
