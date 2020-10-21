@@ -159,7 +159,7 @@ namespace csgo_club_web_app.Controllers
                 .ThenInclude(m => m.GameMatch)
                 .ThenInclude(g => g.Matches)
                 .ThenInclude(m => m.User).FirstOrDefault();
-            return View(user.Matches.Select(s => s.GameMatch).Where(s => s.Status == MatchStatus.Finished).ToList());
+            return View(user.Matches.Select(s => s.GameMatch).Where(s => s.Status == MatchStatus.Finished).OrderByDescending(x=> x.MatchEndDate).ToList());
         }
     }
 }
