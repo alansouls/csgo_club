@@ -43,9 +43,13 @@ namespace csgo_club_web_app.Controllers
             var user = _unityOfWork.GetRepository<User>().Query(x => x.SteamId == userId)
                 .Include(x => x.Matches).ThenInclude(x => x.GameMatch).FirstOrDefault();
             var gameMatch = _unityOfWork.GetRepository<GameMatch>().Query(x=> x.Id == id).Include(x=> x.Matches).ThenInclude(x=> x.User).Include(s => s.Server).FirstOrDefault();
-            if (gameMatch == null && gameMatch.Matches.Select(m => m.UserId).Contains(user.Id))
+            if (gameMatch == null)
             {
                 return Redirect(Url.Action("LobbyNonExistent"));
+            }
+            else if (gameMatch.Matches.Select(m => m.UserId).Contains(user.Id))
+            {
+                return Redirect(Url.Action("Index"));
             }
             bool isLeader = gameMatch.Matches.Where(s => s.IsLeader).First().User.Id == user.Id;
             return View(new MatchModel
