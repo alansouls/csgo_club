@@ -144,10 +144,25 @@ namespace csgo_club_web_app.Controllers
             var server = _unityOfWork.GetRepository<Server>().Query(s => s.Ip == ip).First();
             if (await server.StopServer())
             {
-                var gameMatch = _unityOfWork.GetRepository<GameMatch>().Query(s => s.Id == id).First();
+                var random = new Random();
+                var gameMatch = _unityOfWork.GetRepository<GameMatch>().Query(s => s.Id == id)
+                    .Include(s => s.Matches)
+                    .ThenInclude(s => s.User).First();
                 gameMatch.Status = MatchStatus.Finished;
                 gameMatch.MatchEndDate = DateTime.Now;
                 server.IsOn = false;
+                var users = gameMatch.Matches.Select(s => s.User).ToList();
+                users.ForEach(u =>
+                {
+                    if (u.KDR == 0)
+                        u.KDR = (decimal)(random.NextDouble() * 2.5 + 0.5);
+                    else
+                    {
+                        u.KDR += (decimal)(random.NextDouble() * 2.5 + 0.5);
+                        u.KDR /= 2;
+                    }
+                    u.Rank = (int)Math.Round((u.KDR - 0.5m) / 0.25m, 0);
+                });
                 _unityOfWork.Save();
             }
             await hubContext.Clients.All.SendAsync("UpdateLobby", id);
