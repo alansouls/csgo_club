@@ -47,7 +47,7 @@ namespace csgo_club_web_app.Controllers
             {
                 return Redirect(Url.Action("LobbyNonExistent"));
             }
-            else if (gameMatch.Matches.Select(m => m.UserId).Contains(user.Id))
+            else if (!gameMatch.Matches.Select(m => m.UserId).Contains(user.Id))
             {
                 return Redirect(Url.Action("Index"));
             }
