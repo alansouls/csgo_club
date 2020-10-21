@@ -5,6 +5,17 @@
     {
       "library": "axios@0.20.0",
       "destination": "wwwroot/axios/"
+    },
+    {
+      "provider": "unpkg",
+      "library": "@microsoft/signalr@3.1.9",
+      "destination": "wwwroot/@microsoft/signalr/",
+      "files": [
+        "dist/browser/signalr.js",
+        "dist/browser/signalr.js.map",
+        "dist/browser/signalr.min.js",
+        "dist/browser/signalr.min.js.map"
+      ]
     }
   ]
 }

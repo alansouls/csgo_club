@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using csgo_club_web_app.Hubs;
 using CsgoClubEF.Repository;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Builder;
@@ -29,7 +30,8 @@ namespace csgo_club_web_app
         {
             services.AddControllersWithViews();
             services.AddDbContext<Context>(options => options.UseSqlServer(Configuration["ConnectionStrings:DefaultConnection"]));
-            
+            services.AddSignalR();
+
             services.AddScoped<IUnityOfWork, UnitOfWork>();
             services.AddAuthentication(options =>
             {
@@ -69,6 +71,7 @@ namespace csgo_club_web_app
                 endpoints.MapControllerRoute(
                     name: "default",
                     pattern: "{controller=Home}/{action=Index}/{id?}");
+                endpoints.MapHub<MatchHub>("/matchhub");
             });
             using (var serviceScope = app.ApplicationServices.GetService<IServiceScopeFactory>().CreateScope())
             {
