@@ -12,6 +12,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.Azure.SignalR;
 
 namespace csgo_club_web_app
 {
@@ -30,7 +31,7 @@ namespace csgo_club_web_app
         {
             services.AddControllersWithViews();
             services.AddDbContext<Context>(options => options.UseSqlServer(Configuration["ConnectionStrings:DefaultConnection"]));
-            services.AddSignalR();
+            services.AddSignalR().AddAzureSignalR(Configuration["ConnectionStrings:SignalR"]);
 
             services.AddScoped<IUnityOfWork, UnitOfWork>();
             services.AddAuthentication(options =>
