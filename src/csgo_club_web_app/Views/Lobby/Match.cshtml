@@ -5,7 +5,7 @@
 <link href="~/css/card.css" rel="stylesheet" type="text/css" />
 <div class="container">
     <div class="main-body">
-        @if(Model.GameMatch.MatchStartDate != null)
+        @if (Model.GameMatch.MatchStartDate != null)
         {
             <div class="row justify-content-between mb-4">
                 <div class="justify-content-center align-items-center">
@@ -55,7 +55,7 @@
             <div>
                 @if (Model.GameMatch.Status == CsgoClubEF.Entities.MatchStatus.Lobby)
                 {
-                    <a class="btn btn-info update-lobby-state" asp-action="Start" asp-controller="Lobby" asp-route-id="@Model.GameMatch.Id" asp-route-ip="@Model.GameMatch.Server.Ip">Start Server</a>
+                    <a class="btn btn-info update-lobby-state mb-4" asp-action="Start" asp-controller="Lobby" asp-route-id="@Model.GameMatch.Id" asp-route-ip="@Model.GameMatch.Server.Ip">Start Server</a>
                 }
                 else if (Model.GameMatch.Status == CsgoClubEF.Entities.MatchStatus.Started)
                 {
@@ -73,6 +73,7 @@
                 }
             </div>
         }
+        <a class="btn btn-info" asp-action="Exit" asp-controller="Lobby">Exit Lobby</a>
         @if (Model.GameMatch.Status == CsgoClubEF.Entities.MatchStatus.Finished)
         {
             <div>
