@@ -2,8 +2,20 @@
     ViewData["Title"] = "Home Page";
 }
 
+@if (User.Identity.IsAuthenticated)
+{
     <div class="text-center">
-        <h1 class="display-4">Welcome</h1>
-        <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
-   
+        <h1 class="display-4">Welcome to CSGO Club</h1>
+        <p>Create your own lobby to play CSGO with your friends.</p>
+        <p>See your match history and download the replay.</p>
     </div>
+}
+else
+{
+    <div class="text-center">
+        <h1 class="display-4">Welcome to CSGO Club</h1>
+        <p>Please, login with your Steam account to access our servers.</p>
+    </div>
+}
+
+
