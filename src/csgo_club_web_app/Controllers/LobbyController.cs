@@ -169,10 +169,22 @@ namespace csgo_club_web_app.Controllers
             var id = UInt64.Parse(User.Claims.First().Value.Split("id/")[2]);
             var user = _unityOfWork.GetRepository<User>().Query(x => x.SteamId == id)
                 .Include(u => u.Matches)
-                .ThenInclude(m => m.GameMatch).FirstOrDefault();
+                .ThenInclude(m => m.GameMatch)
+                .ThenInclude(g => g.Matches)
+                .FirstOrDefault();
             var match = user.Matches.Where(s => s.GameMatch.Status == MatchStatus.Lobby).FirstOrDefault();
-            _unityOfWork.GetRepository<PlayerToMatch>().Remove(match);
-            _unityOfWork.Save();
+            if (!match.IsLeader)
+            {
+                _unityOfWork.GetRepository<PlayerToMatch>().Remove(match);
+                _unityOfWork.Save();
+            }
+            else
+            {
+                var gameMatch = match.GameMatch;
+                _unityOfWork.GetRepository<PlayerToMatch>().RemoveMany(gameMatch.Matches);
+                _unityOfWork.GetRepository<GameMatch>().Remove(gameMatch);
+                _unityOfWork.Save();
+            }
             await hubContext.Clients.All.SendAsync("UpdateLobby", match.GameMatchId);
             return Redirect(Url.Action("Index"));
         }
